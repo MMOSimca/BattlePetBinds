@@ -86,25 +86,96 @@ local function BPB_CreateHotKeys()
 	for i = 1, 10 do
 		local button = "BPB_HotKey"..i
 		CreateFrame("Button", button, nil, "SecureActionButtonTemplate")
-		_G[button]:SetAttribute("type", "macro")
 	end
 	
 	CreateFrame("Button", "BPB_NothingButton", nil, "SecureActionButtonTemplate")
 	CreateFrame("Button", "BPB_LongForfeit", nil, "SecureActionButtonTemplate")
-	_G["BPB_LongForfeit"]:SetAttribute("type", "macro")
 	
-	-- add macro code (to store code for later) into the buttons
-	_G["BPB_HotKey1"]:SetAttribute("macrotext", "/run StaticPopup_Hide(\34PET_BATTLE_FORFEIT\34,nil) StaticPopup_Hide(\34PET_BATTLE_FORFEIT_NO_PENALTY\34,nil) C_PetBattles.UseAbility(1)")
-	_G["BPB_HotKey2"]:SetAttribute("macrotext", "/run StaticPopup_Hide(\34PET_BATTLE_FORFEIT\34,nil) StaticPopup_Hide(\34PET_BATTLE_FORFEIT_NO_PENALTY\34,nil) C_PetBattles.UseAbility(2)")
-	_G["BPB_HotKey3"]:SetAttribute("macrotext", "/run StaticPopup_Hide(\34PET_BATTLE_FORFEIT\34,nil) StaticPopup_Hide(\34PET_BATTLE_FORFEIT_NO_PENALTY\34,nil) C_PetBattles.UseAbility(3)")
-	_G["BPB_HotKey4"]:SetAttribute("macrotext", "/run StaticPopup_Hide(\34PET_BATTLE_FORFEIT\34,nil) StaticPopup_Hide(\34PET_BATTLE_FORFEIT_NO_PENALTY\34,nil) local selectionFrame = PetBattleFrame.BottomFrame.PetSelectionFrame local battleState = C_PetBattles.GetBattleState() local selectedActionType = C_PetBattles.GetSelectedAction() local mustSwap = ( ( not selectedActionType ) or ( selectedActionType == BATTLE_PET_ACTION_NONE ) ) and ( battleState == LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE ) or ( battleState == LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS ) if ( selectionFrame:IsShown() and ( not mustSwap ) ) then PetBattlePetSelectionFrame_Hide(selectionFrame) else PetBattlePetSelectionFrame_Show(selectionFrame) end")
-	_G["BPB_HotKey5"]:SetAttribute("macrotext", "/run do local usable = C_PetBattles.IsTrapAvailable() if (usable) then StaticPopup_Hide(\34PET_BATTLE_FORFEIT\34,nil) StaticPopup_Hide(\34PET_BATTLE_FORFEIT_NO_PENALTY\34,nil) C_PetBattles.UseTrap() end end")
-	_G["BPB_HotKey6"]:SetAttribute("macrotext", "/run StaticPopup_Hide(\34PET_BATTLE_FORFEIT\34,nil) StaticPopup_Hide(\34PET_BATTLE_FORFEIT_NO_PENALTY\34,nil) C_PetBattles.ForfeitGame()")
-	_G["BPB_HotKey7"]:SetAttribute("macrotext", "/run StaticPopup_Hide(\34PET_BATTLE_FORFEIT\34,nil) StaticPopup_Hide(\34PET_BATTLE_FORFEIT_NO_PENALTY\34,nil) C_PetBattles.SkipTurn()")
-	_G["BPB_HotKey8"]:SetAttribute("macrotext", "/run if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(1)) then C_PetBattles.ChangePet(1) PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame) end")
-	_G["BPB_HotKey9"]:SetAttribute("macrotext", "/run if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(2)) then C_PetBattles.ChangePet(2) PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame) end")
-	_G["BPB_HotKey10"]:SetAttribute("macrotext", "/run if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(3)) then C_PetBattles.ChangePet(3) PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame) end")
-	_G["BPB_LongForfeit"]:SetAttribute("macrotext", "/run if (StaticPopup1:IsVisible()) then StaticPopup1Button1:Click() else local forfeitPenalty = C_PetBattles.GetForfeitPenalty() if (forfeitPenalty == 0) then StaticPopup_Show(\34PET_BATTLE_FORFEIT_NO_PENALTY\34, nil, nil, nil) else StaticPopup_Show(\34PET_BATTLE_FORFEIT\34, forfeitPenalty, nil, nil) end end")
+	-- Functions for Ability buttons
+	_G["BPB_HotKey1"]:SetScript("OnClick", (function(...)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+        C_PetBattles.UseAbility(1)
+    end))
+	_G["BPB_HotKey2"]:SetScript("OnClick", (function(...)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+        C_PetBattles.UseAbility(2)
+    end))
+	_G["BPB_HotKey3"]:SetScript("OnClick", (function(...)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+        C_PetBattles.UseAbility(3)
+    end))
+    
+	-- Function for popping up the pet selection menu (code taken from Blizzard, basically)
+	_G["BPB_HotKey4"]:SetScript("OnClick", (function(...)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+        local selectionFrame = PetBattleFrame.BottomFrame.PetSelectionFrame
+        local battleState = C_PetBattles.GetBattleState()
+        local selectedActionType = C_PetBattles.GetSelectedAction()
+        local mustSwap = ((not selectedActionType) or (selectedActionType == BATTLE_PET_ACTION_NONE)) and (battleState == LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE) or (battleState == LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS)
+        if (selectionFrame:IsShown() and (not mustSwap)) then
+            PetBattlePetSelectionFrame_Hide(selectionFrame)
+        else
+            PetBattlePetSelectionFrame_Show(selectionFrame)
+        end
+    end))
+    
+    -- Functions for using a trap, basic forfeiting, and skipping a turn
+	_G["BPB_HotKey5"]:SetScript("OnClick", (function(...)
+        local usable = C_PetBattles.IsTrapAvailable()
+        if (usable) then
+            StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+            StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+            C_PetBattles.UseTrap()
+        end
+    end))
+	_G["BPB_HotKey6"]:SetScript("OnClick", (function(...)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+        C_PetBattles.ForfeitGame()
+    end))
+	_G["BPB_HotKey7"]:SetScript("OnClick", (function(...)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+        C_PetBattles.SkipTurn()
+    end))
+    
+    -- Functions for swapping pets expressly
+	_G["BPB_HotKey8"]:SetScript("OnClick", (function(...)
+        if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(1)) then
+            C_PetBattles.ChangePet(1)
+            PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
+        end
+    end))
+	_G["BPB_HotKey9"]:SetScript("OnClick", (function(...)
+        if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(2)) then
+            C_PetBattles.ChangePet(2)
+            PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
+        end
+    end))
+	_G["BPB_HotKey10"]:SetScript("OnClick", (function(...)
+        if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(3)) then
+            C_PetBattles.ChangePet(3)
+            PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
+        end
+    end))
+    
+    -- Function for advanced forfeiting (double tap to forfeit - first tap prompts, second tap confirms)
+	_G["BPB_LongForfeit"]:SetScript("OnClick", (function(...)
+        if (StaticPopup1:IsVisible()) then
+            StaticPopup1Button1:Click()
+        else
+            local forfeitPenalty = C_PetBattles.GetForfeitPenalty()
+            if (forfeitPenalty == 0) then
+                StaticPopup_Show("PET_BATTLE_FORFEIT_NO_PENALTY", nil, nil, nil)
+            else
+                StaticPopup_Show("PET_BATTLE_FORFEIT", forfeitPenalty, nil, nil)
+            end
+        end
+    end))
 end
 
 -- set up text indicators for forfeit, pass turn, and pet swapping HotKeys
