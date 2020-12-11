@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: Battle Pet Binds
 ## Author: Simca
 ## Notes: An addon that allows users to easily define bindings for all Pet Battle features without overwriting normal keybinds!
