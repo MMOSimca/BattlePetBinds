@@ -3,9 +3,12 @@
 ## Author: Simca
 ## Notes: An addon that allows users to easily define bindings for all Pet Battle features without overwriting normal keybinds!
 ## Version: @project-version@
-## X-Date: @project-date-iso@
 ## X-Category: Pet Battles
+## X-Date: @project-date-iso@
+## X-License: BSD
 ## X-Localizations: enUS
+## X-Curse-Project-ID: 48478
+## X-WoWI-ID: 22230
 ## SavedVariables: BPBindOptions
 
 BattlePetBinds.lua
