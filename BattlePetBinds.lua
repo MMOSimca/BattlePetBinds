@@ -6,7 +6,7 @@
 ------------------------------
 
 -- localize addon namespace
-local addon, ns = ...
+local addonname, ns = ...
 
 -- localize functions
 local SOBC = _G.SetOverrideBindingClick
@@ -349,16 +349,7 @@ SLASH_BATTLEPETBINDS1 = "/battlepetbinds"
 SLASH_BATTLEPETBINDS2 = "/bpbinds"
 SLASH_BATTLEPETBINDS3 = "/petbinds"
 SlashCmdList["BATTLEPETBINDS"] = function(msg)
-	InterfaceOptionsFrame:Show()
-	InterfaceOptionsFrameTab2:Click()
-	
-	local i = 1
-	local currAddon = "InterfaceOptionsFrameAddOnsButton" .. i
-	while _G[currAddon] do
-		if (_G[currAddon]:GetText() == "Battle Pet Binds") then _G[currAddon]:Click() break end
-		i = i + 1
-		currAddon = "InterfaceOptionsFrameAddOnsButton" .. i
-	end
+	Settings.OpenToCategory(addonname)
 end
 
 -- set our event handler function

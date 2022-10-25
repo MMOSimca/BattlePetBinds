@@ -28,12 +28,7 @@ ns.BPB_Desc = { -- local text variable to help ease implementation of foreign lo
 ns.masterTransfer = false
 
 local Options = CreateFrame("Frame")
-Options:Hide()
-Options.name = "Battle Pet Binds"
-
--- Add the Options panel to the Blizzard list
-local category = Settings.RegisterCanvasLayoutCategory(Options, Options.name)
-Settings.RegisterAddOnCategory(category)
+local properName = "Battle Pet Binds"
 
 local function CreateFont(fontName, r, g, b, anchorPoint, relativeTo, relativePoint, cx, cy, xoff, yoff, text)
 	local font = Options:CreateFontString(nil, "BACKGROUND", fontName)
@@ -52,7 +47,7 @@ local function CreateFont(fontName, r, g, b, anchorPoint, relativeTo, relativePo
 	return font
 end
 
-local title = CreateFont("GameFontNormalLarge", Options.name)
+local title = CreateFont("GameFontNormalLarge", properName)
 title:SetPoint("TOPLEFT", 16, -16)
 local ver = CreateFont("GameFontNormalSmall", "version "..GetAddOnMetadata(addonname, "Version"))
 ver:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 4, 0)
@@ -256,7 +251,7 @@ local function masterFrame_OnEvent(self, event, ...)
 end
 
 -- defaults
-function Options.default()
+function Options.OnDefault()
 	if masterFrame:IsShown() then BPB_HideMasterFrame() end
 	BPBindOptions.Bind = {
 		"1", -- Attack #1
@@ -277,19 +272,19 @@ function Options.default()
 end
 
 -- update hotkeys when okay is pressed if in battle
-function Options.okay()
+function Options.OnCommit()
 	if not InCombatLockdown() and C_PetBattles.IsInBattle() then
 		ns.UpdateHotKeys()
 	end
 end
 
--- update hotkeys when cancel is pressed if in battle
-function Options.cancel()
-	-- could potentially do something to void changes just made in the future, but for now just mimic functionality of okay button
-	if not InCombatLockdown() and C_PetBattles.IsInBattle() then
-		ns.UpdateHotKeys()
-	end
-end
+-- refresh function (empty)
+function Options.OnRefresh() end
 
 -- set script for checkbox
 BPBConfigForfeitBox:SetScript("OnClick", BPBConfigForfeitBox_OnClick)
+
+-- Add the Options panel to the Blizzard list
+local category = Settings.RegisterCanvasLayoutCategory(Options, properName, properName)
+category.ID = addonname
+Settings.RegisterAddOnCategory(category)
