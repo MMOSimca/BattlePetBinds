@@ -212,7 +212,7 @@ local function BPB_CreateHotKeyTexts()
 end
 
 -- update the hotkey texts with the binds in case they've changed and also increase widths slightly
-function ns.UpdateHotKeys()
+function ns.UpdateHotKeyTexts()
 	
 	for i = 1, 3 do
 		PetBattleFrame.BottomFrame.abilityButtons[i].HotKey:SetText(ns.BPB_Shorten(BPBindOptions.Bind[i]))
@@ -228,6 +228,28 @@ function ns.UpdateHotKeys()
 		local fstr = "BPB_HotKeyText"..i
 		_G[fstr]:SetText(ns.BPB_Shorten(BPBindOptions.Bind[i]))
 	end
+end
+
+-- set up binds
+function ns.SetOverrideBindings()
+	-- remove old blizzard bindings
+	for i = 1, 5 do
+		SOBC(BattlePetBinds, true, ns.tostr(i), "BPB_NothingButton")
+	end
+	
+	-- set up our override binding clicks
+	for i = 1, 10 do
+		local button = "BPB_HotKey"..i
+		SOBC(BattlePetBinds, true, BPBindOptions.Bind[i], button)
+	end
+	
+	-- set up "confirm forfeit" bind if the user wants it
+	if (BPBindOptions.ForfeitCheck) then
+		SOBC(BattlePetBinds, true, BPBindOptions.Bind[6], "BPB_LongForfeit")
+	end
+	
+	-- tell the boolean we have set our bindings
+	BPB_BindState = true
 end
 
 -- event handler function
@@ -267,25 +289,9 @@ local function BattlePetBinds_OnEvent(self, event, ...)
 			-- create hotkey frames and hotkey text frames (because we know they don't exist at addon load)
 			BPB_CreateHotKeys()
 			BPB_CreateHotKeyTexts()
-			
-			-- remove old blizzard bindings
-			for i = 1, 5 do
-				SOBC(BattlePetBinds, true, ns.tostr(i), "BPB_NothingButton")
-			end
-			
-			-- set up our override binding clicks
-			for i = 1, 10 do
-				local button = "BPB_HotKey"..i
-				SOBC(BattlePetBinds, true, BPBindOptions.Bind[i], button)
-			end
-			
-			-- set up "confirm forfeit" bind if the user wants it
-			if (BPBindOptions.ForfeitCheck) then
-				SOBC(BattlePetBinds, true, BPBindOptions.Bind[6], "BPB_LongForfeit")
-			end
-			
-			-- tell the boolean we have set our bindings
-			BPB_BindState = true
+
+			-- set up bindings
+			ns.SetOverrideBindings()
 			
 			-- register combat enter/exit events
 			BattlePetBinds:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -305,26 +311,11 @@ local function BattlePetBinds_OnEvent(self, event, ...)
 			BPB_CreateHotKeyTexts()
 		end
 		
-		ns.UpdateHotKeys()
-		
-		-- remove old blizzard bindings
-		for i = 1, 5 do
-			SOBC(BattlePetBinds, true, ns.tostr(i), "BPB_NothingButton")
-		end
-		
-		-- set up our override binding clicks
-		for i = 1, 10 do
-			local button = "BPB_HotKey"..i
-			SOBC(BattlePetBinds, true, BPBindOptions.Bind[i], button)
-		end
-		
-		-- set up "confirm forfeit" bind if the user wants it
-		if (BPBindOptions.ForfeitCheck) then
-			SOBC(BattlePetBinds, true, BPBindOptions.Bind[6], "BPB_LongForfeit")
-		end
-		
-		-- tell the boolean we have set our bindings
-		BPB_BindState = true
+		-- update existing hotkey texts
+		ns.UpdateHotKeyTexts()
+
+		-- set up bindings
+		ns.SetOverrideBindings()
 		
 		-- register combat enter/exit events
 		BattlePetBinds:RegisterEvent("PLAYER_REGEN_ENABLED")

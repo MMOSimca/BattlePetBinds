@@ -274,7 +274,8 @@ end
 -- update hotkeys when okay is pressed if in battle
 function Options.OnCommit()
 	if not InCombatLockdown() and C_PetBattles.IsInBattle() then
-		ns.UpdateHotKeys()
+		ns.UpdateHotKeyTexts()
+		ns.SetOverrideBindings()
 	end
 end
 
