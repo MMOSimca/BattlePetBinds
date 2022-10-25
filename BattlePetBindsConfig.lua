@@ -8,7 +8,7 @@
 -- Thanks to Ro for inspiration (and the title/version/description code) for the overall structure of this Options panel
 
 -- localize addon namespace
-local addon, ns = ...
+local addonname, ns = ...
 
 -- current button variable for masterframe config
 local currID
@@ -27,11 +27,15 @@ ns.BPB_Desc = { -- local text variable to help ease implementation of foreign lo
 }
 ns.masterTransfer = false
 
-local Options = CreateFrame("Frame",nil,InterfaceOptionsFramePanelContainer)
+local Options = CreateFrame("Frame")
 Options:Hide()
 Options.name = "Battle Pet Binds"
 
-local function createfont(fontName, r, g, b, anchorPoint, relativeTo, relativePoint, cx, cy, xoff, yoff, text)
+-- Add the Options panel to the Blizzard list
+local category = Settings.RegisterCanvasLayoutCategory(Options, Options.name)
+Settings.RegisterAddOnCategory(category)
+
+local function CreateFont(fontName, r, g, b, anchorPoint, relativeTo, relativePoint, cx, cy, xoff, yoff, text)
 	local font = Options:CreateFontString(nil, "BACKGROUND", fontName)
 	font:SetJustifyH("LEFT")
 	font:SetJustifyV("TOP")
@@ -48,14 +52,13 @@ local function createfont(fontName, r, g, b, anchorPoint, relativeTo, relativePo
 	return font
 end
 
-local panelWidth = InterfaceOptionsFramePanelContainer:GetWidth() -- ~623
-local wideWidth = panelWidth - 40
-
-local title = createfont("GameFontNormalLarge", "Battle Pet Binds")
+local title = CreateFont("GameFontNormalLarge", Options.name)
 title:SetPoint("TOPLEFT", 16, -16)
-local ver = createfont("GameFontNormalSmall", "version "..GetAddOnMetadata("BattlePetBinds", "Version"))
+local ver = CreateFont("GameFontNormalSmall", "version "..GetAddOnMetadata(addonname, "Version"))
 ver:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 4, 0)
-local desc = createfont("GameFontHighlight", nil, nil, nil, "TOPLEFT", title, "BOTTOMLEFT" ,wideWidth, 40, 0, -8, "An addon that allows users to easily define custom keybinds for all Pet Battle features (including skipping turns, changing pets, and forfeiting) without overwriting non-pet-battle keybinds!")
+local auth = CreateFont("GameFontNormalSmall", "created by "..GetAddOnMetadata(addonname, "Author"))
+auth:SetPoint("BOTTOMLEFT", ver, "BOTTOMRIGHT", 3, 0)
+local desc = CreateFont("GameFontHighlight", nil, nil, nil, "TOPLEFT", title, "BOTTOMLEFT" , 580, 40, 0, -8, "An addon that allows users to easily define custom keybinds for all Pet Battle features (including skipping turns, changing pets, and forfeiting) without overwriting non-pet-battle keybinds!")
 
 -- create and hide the master keybind accepting frame
 local masterFrame = CreateFrame("Button", "BPBConfigMaster", Options)
@@ -290,6 +293,3 @@ end
 
 -- set script for checkbox
 BPBConfigForfeitBox:SetScript("OnClick", BPBConfigForfeitBox_OnClick)
-
--- add the Options panel to the Blizzard list
-InterfaceOptions_AddCategory(Options)
