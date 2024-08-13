@@ -1,7 +1,7 @@
-## Interface: 110000
+## Interface: 110002
 ## Title: Battle Pet Binds
 ## Author: Simca
-## Notes: An addon that allows users to easily define bindings for all Pet Battle features without overwriting normal keybinds!
+## Notes: Allows users to easily define bindings for all Pet Battle features without overwriting normal keybinds!
 ## Version: @project-version@
 ## X-Category: Pet Battles
 ## X-Date: @project-date-iso@
