@@ -49,9 +49,9 @@ end
 
 local title = CreateFont("GameFontNormalLarge", properName)
 title:SetPoint("TOPLEFT", 16, -16)
-local ver = CreateFont("GameFontNormalSmall", "version "..GetAddOnMetadata(addonname, "Version"))
+local ver = CreateFont("GameFontNormalSmall", "version "..C_AddOns.GetAddOnMetadata(addonname, "Version"))
 ver:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 4, 0)
-local auth = CreateFont("GameFontNormalSmall", "created by "..GetAddOnMetadata(addonname, "Author"))
+local auth = CreateFont("GameFontNormalSmall", "created by "..C_AddOns.GetAddOnMetadata(addonname, "Author"))
 auth:SetPoint("BOTTOMLEFT", ver, "BOTTOMRIGHT", 3, 0)
 local desc = CreateFont("GameFontHighlight", nil, nil, nil, "TOPLEFT", title, "BOTTOMLEFT" , 580, 40, 0, -8, "An addon that allows users to easily define custom keybinds for all Pet Battle features (including skipping turns, changing pets, and forfeiting) without overwriting non-pet-battle keybinds!")
 
