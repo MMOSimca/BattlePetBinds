@@ -1,4 +1,5 @@
-## Interface: 110105
+## Interface: 110107
+## Interface-Mists: 50500
 ## Title: Battle Pet Binds
 ## Author: Simca
 ## Notes: Allows users to easily define bindings for all Pet Battle features without overwriting normal keybinds!
