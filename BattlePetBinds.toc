@@ -8,6 +8,7 @@
 ## X-License: BSD
 ## X-Localizations: enUS
 ## X-Curse-Project-ID: 48478
+## X-Wago-ID: x61zZpK1
 ## X-WoWI-ID: 22230
 ## SavedVariables: BPBindOptions
 
