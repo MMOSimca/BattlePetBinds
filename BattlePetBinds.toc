@@ -1,4 +1,4 @@
-## Interface: 120000, 50503, 50502
+## Interface: 120005, 50503, 50502
 ## Title: Battle Pet Binds
 ## Author: Simca
 ## Notes: Allows users to easily define bindings for all Pet Battle features without overwriting normal keybinds!
