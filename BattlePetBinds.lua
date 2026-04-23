@@ -93,89 +93,89 @@ local function BPB_CreateHotKeys()
 	
 	-- Functions for Ability buttons
 	_G["BPB_HotKey1"]:SetScript("OnClick", (function(...)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
-        C_PetBattles.UseAbility(1)
-    end))
+		StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+		StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+		C_PetBattles.UseAbility(1)
+	end))
 	_G["BPB_HotKey2"]:SetScript("OnClick", (function(...)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
-        C_PetBattles.UseAbility(2)
-    end))
+		StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+		StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+		C_PetBattles.UseAbility(2)
+	end))
 	_G["BPB_HotKey3"]:SetScript("OnClick", (function(...)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
-        C_PetBattles.UseAbility(3)
-    end))
-    
+		StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+		StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+		C_PetBattles.UseAbility(3)
+	end))
+	
 	-- Function for popping up the pet selection menu (code taken from Blizzard, basically)
 	_G["BPB_HotKey4"]:SetScript("OnClick", (function(...)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
-        local selectionFrame = PetBattleFrame.BottomFrame.PetSelectionFrame
-        local battleState = C_PetBattles.GetBattleState()
-        local selectedActionType = C_PetBattles.GetSelectedAction()
-        local mustSwap = ((not selectedActionType) or (selectedActionType == BATTLE_PET_ACTION_NONE)) and (battleState == LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE) or (battleState == LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS)
-        if (selectionFrame:IsShown() and (not mustSwap)) then
-            PetBattlePetSelectionFrame_Hide(selectionFrame)
-        else
-            PetBattlePetSelectionFrame_Show(selectionFrame)
-        end
-    end))
-    
-    -- Functions for using a trap, basic forfeiting, and skipping a turn
+		StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+		StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+		local selectionFrame = PetBattleFrame.BottomFrame.PetSelectionFrame
+		local battleState = C_PetBattles.GetBattleState()
+		local selectedActionType = C_PetBattles.GetSelectedAction()
+		local mustSwap = ((not selectedActionType) or (selectedActionType == BATTLE_PET_ACTION_NONE)) and (battleState == LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE) or (battleState == LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS)
+		if (selectionFrame:IsShown() and (not mustSwap)) then
+			PetBattlePetSelectionFrame_Hide(selectionFrame)
+		else
+			PetBattlePetSelectionFrame_Show(selectionFrame)
+		end
+	end))
+	
+	-- Functions for using a trap, basic forfeiting, and skipping a turn
 	_G["BPB_HotKey5"]:SetScript("OnClick", (function(...)
-        local usable = C_PetBattles.IsTrapAvailable()
-        if (usable) then
-            StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
-            StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
-            C_PetBattles.UseTrap()
-        end
-    end))
+		local usable = C_PetBattles.IsTrapAvailable()
+		if (usable) then
+			StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+			StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+			C_PetBattles.UseTrap()
+		end
+	end))
 	_G["BPB_HotKey6"]:SetScript("OnClick", (function(...)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
-        C_PetBattles.ForfeitGame()
-    end))
+		StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+		StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+		C_PetBattles.ForfeitGame()
+	end))
 	_G["BPB_HotKey7"]:SetScript("OnClick", (function(...)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
-        StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
-        C_PetBattles.SkipTurn()
-    end))
-    
-    -- Functions for swapping pets expressly
+		StaticPopup_Hide("PET_BATTLE_FORFEIT", nil)
+		StaticPopup_Hide("PET_BATTLE_FORFEIT_NO_PENALTY", nil)
+		C_PetBattles.SkipTurn()
+	end))
+	
+	-- Functions for swapping pets expressly
 	_G["BPB_HotKey8"]:SetScript("OnClick", (function(...)
-        if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(1)) then
-            C_PetBattles.ChangePet(1)
-            PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
-        end
-    end))
+		if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(1)) then
+			C_PetBattles.ChangePet(1)
+			PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
+		end
+	end))
 	_G["BPB_HotKey9"]:SetScript("OnClick", (function(...)
-        if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(2)) then
-            C_PetBattles.ChangePet(2)
-            PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
-        end
-    end))
+		if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(2)) then
+			C_PetBattles.ChangePet(2)
+			PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
+		end
+	end))
 	_G["BPB_HotKey10"]:SetScript("OnClick", (function(...)
-        if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(3)) then
-            C_PetBattles.ChangePet(3)
-            PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
-        end
-    end))
-    
-    -- Function for advanced forfeiting (double tap to forfeit - first tap prompts, second tap confirms)
+		if (C_PetBattles.CanActivePetSwapOut() and C_PetBattles.CanPetSwapIn(3)) then
+			C_PetBattles.ChangePet(3)
+			PetBattlePetSelectionFrame_Hide(PetBattleFrame.BottomFrame.PetSelectionFrame)
+		end
+	end))
+	
+	-- Function for advanced forfeiting (double tap to forfeit - first tap prompts, second tap confirms)
 	_G["BPB_LongForfeit"]:SetScript("OnClick", (function(...)
-        if (StaticPopup1:IsVisible()) then
-            StaticPopup1Button1:Click()
-        else
-            local forfeitPenalty = C_PetBattles.GetForfeitPenalty()
-            if (forfeitPenalty == 0) then
-                StaticPopup_Show("PET_BATTLE_FORFEIT_NO_PENALTY", nil, nil, nil)
-            else
-                StaticPopup_Show("PET_BATTLE_FORFEIT", forfeitPenalty, nil, nil)
-            end
-        end
-    end))
+		if (StaticPopup1:IsVisible()) then
+			StaticPopup1Button1:Click()
+		else
+			local forfeitPenalty = C_PetBattles.GetForfeitPenalty()
+			if (forfeitPenalty == 0) then
+				StaticPopup_Show("PET_BATTLE_FORFEIT_NO_PENALTY", nil, nil, nil)
+			else
+				StaticPopup_Show("PET_BATTLE_FORFEIT", forfeitPenalty, nil, nil)
+			end
+		end
+	end))
 end
 
 -- set up text indicators for forfeit, pass turn, and pet swapping HotKeys
@@ -192,10 +192,39 @@ local function BPB_CreateHotKeyTexts()
 	_G["BPB_HotKeyText8"]:SetParent(PetBattleFrame.BottomFrame.PetSelectionFrame.Pet1)
 	_G["BPB_HotKeyText9"]:SetParent(PetBattleFrame.BottomFrame.PetSelectionFrame.Pet2)
 	_G["BPB_HotKeyText10"]:SetParent(PetBattleFrame.BottomFrame.PetSelectionFrame.Pet3)
+end
+
+-- update the hotkey texts with the binds in case they've changed and also increase widths slightly
+function ns.UpdateHotKeyTexts()
+	
+	for i = 1, 3 do
+		PetBattleFrame.BottomFrame.abilityButtons[i].HotKey:SetText(ns.BPB_Shorten(BPBindOptions.Bind[i]))
+		PetBattleFrame.BottomFrame.abilityButtons[i].HotKey:SetWidth(46)
+		PetBattleFrame.BottomFrame.abilityButtons[i].HotKey:Show()
+	end
+	
+	PetBattleFrame.BottomFrame.SwitchPetButton.HotKey:SetText(ns.BPB_Shorten(BPBindOptions.Bind[4]))
+	PetBattleFrame.BottomFrame.SwitchPetButton.HotKey:SetWidth(46)
+	PetBattleFrame.BottomFrame.SwitchPetButton.HotKey:Show()
+	PetBattleFrame.BottomFrame.CatchButton.HotKey:SetText(ns.BPB_Shorten(BPBindOptions.Bind[5]))
+	PetBattleFrame.BottomFrame.CatchButton.HotKey:SetWidth(46)
+	PetBattleFrame.BottomFrame.CatchButton.HotKey:Show()
+	
+	-- clear the anchor points for the fontstrings just in case
+	for i = 6, 10 do
+		_G["BPB_HotKeyText"..i]:ClearAllPoints()
+	end
+	
+	-- check if Annene is loaded to slightly adjust positioning better on the Skip button
+	local _, isLoaded = C_AddOns.IsAddOnLoaded("Annene")
 	
 	-- set the anchor point for each fontstring
 	_G["BPB_HotKeyText6"]:SetPoint("TOPRIGHT", PetBattleFrame.BottomFrame.ForfeitButton, "TOPRIGHT", -1, -3)
-	_G["BPB_HotKeyText7"]:SetPoint("TOPRIGHT", PetBattleFrame.BottomFrame.TurnTimer.SkipButton, "TOPRIGHT", -1, -6)
+	if isLoaded then
+		_G["BPB_HotKeyText7"]:SetPoint("TOPRIGHT", PetBattleFrame.BottomFrame.TurnTimer.SkipButton, "TOPRIGHT", -1, -3)
+	else
+		_G["BPB_HotKeyText7"]:SetPoint("TOPRIGHT", PetBattleFrame.BottomFrame.TurnTimer.SkipButton, "TOPRIGHT", -1, -6)
+	end
 	_G["BPB_HotKeyText8"]:SetPoint("BOTTOMRIGHT", PetBattleFrame.BottomFrame.PetSelectionFrame.Pet1, "BOTTOMRIGHT", -6, 9)
 	_G["BPB_HotKeyText9"]:SetPoint("BOTTOMRIGHT", PetBattleFrame.BottomFrame.PetSelectionFrame.Pet2, "BOTTOMRIGHT", -6, 9)
 	_G["BPB_HotKeyText10"]:SetPoint("BOTTOMRIGHT", PetBattleFrame.BottomFrame.PetSelectionFrame.Pet3, "BOTTOMRIGHT", -6, 9)
@@ -208,25 +237,6 @@ local function BPB_CreateHotKeyTexts()
 		_G[fstr]:SetWidth(46)
 		_G[fstr]:SetText(ns.BPB_Shorten(BPBindOptions.Bind[i]))
 		_G[fstr]:Show()
-	end
-end
-
--- update the hotkey texts with the binds in case they've changed and also increase widths slightly
-function ns.UpdateHotKeyTexts()
-	
-	for i = 1, 3 do
-		PetBattleFrame.BottomFrame.abilityButtons[i].HotKey:SetText(ns.BPB_Shorten(BPBindOptions.Bind[i]))
-		PetBattleFrame.BottomFrame.abilityButtons[i].HotKey:SetWidth(46)
-	end
-	
-	PetBattleFrame.BottomFrame.SwitchPetButton.HotKey:SetText(ns.BPB_Shorten(BPBindOptions.Bind[4]))
-	PetBattleFrame.BottomFrame.SwitchPetButton.HotKey:SetWidth(46)
-	PetBattleFrame.BottomFrame.CatchButton.HotKey:SetText(ns.BPB_Shorten(BPBindOptions.Bind[5]))
-	PetBattleFrame.BottomFrame.CatchButton.HotKey:SetWidth(46)
-	
-	for i = 6, 10 do
-		local fstr = "BPB_HotKeyText"..i
-		_G[fstr]:SetText(ns.BPB_Shorten(BPBindOptions.Bind[i]))
 	end
 end
 
@@ -307,7 +317,7 @@ local function BattlePetBinds_OnEvent(self, event, ...)
 		end
 		
 		-- create hotkey text frames if they don't exist
-		if not BPB_HotKeyText1 then
+		if not BPB_HotKeyText6 then
 			BPB_CreateHotKeyTexts()
 		end
 		
